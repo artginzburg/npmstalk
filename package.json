@@ -1,0 +1,15 @@
+{
+  "name": "npmstalk",
+  "version": "1.0.0",
+  "description": "",
+  "license": "ISC",
+  "repository": "artginzburg/npmstalk",
+  "funding": "https://www.buymeacoffee.com/artginzburg",
+  "author": "Art Ginzburg <ginzburg.arthur@gmail.com>",
+  "scripts": {
+    "start": "node index"
+  },
+  "dependencies": {
+    "npm-api": "^1.0.1"
+  }
+}
