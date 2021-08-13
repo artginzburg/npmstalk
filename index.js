@@ -35,4 +35,8 @@ async function getMaintainerDownloads(username) {
   };
 }
 
-getMaintainerDownloads('artginzburg').then(console.log);
+getMaintainerDownloads('artginzburg').then((data) => {
+  let badge = require('./badge.json');
+  badge.message = data.total;
+  require('fs').writeFileSync('badge.json', JSON.stringify(badge, null, 2));
+});
