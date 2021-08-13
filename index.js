@@ -43,7 +43,8 @@ module.exports.endpoint = function (request, response) {
         label: 'downloads',
         message: String(data.total),
         color: 'red',
-        namedLogo: 'npm'
+        namedLogo: 'npm',
+        cacheSeconds: 8 * 60 * 60,
       }),
     );
   });
