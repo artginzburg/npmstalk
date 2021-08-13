@@ -35,8 +35,16 @@ async function getMaintainerDownloads(username) {
   };
 }
 
-getMaintainerDownloads('artginzburg').then((data) => {
-  let badge = require('./shield.json');
-  badge.message = String(data.total);
-  require('fs').writeFileSync('shield.json', JSON.stringify(badge, null, 2));
-});
+module.exports.endpoint = function (request, response) {
+  getMaintainerDownloads('artginzburg').then((data) => {
+    response.end(
+      JSON.stringify({
+        schemaVersion: 1,
+        label: 'npm downloads',
+        message: String(data.total),
+        color: 'red',
+        logo: 'npm',
+      }),
+    );
+  });
+};
