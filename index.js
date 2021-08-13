@@ -40,10 +40,10 @@ module.exports.endpoint = function (request, response) {
     response.end(
       JSON.stringify({
         schemaVersion: 1,
-        label: 'npm downloads',
+        label: 'downloads',
         message: String(data.total),
         color: 'red',
-        logo: 'npm',
+        namedLogo: 'npm'
       }),
     );
   });
