@@ -37,6 +37,6 @@ async function getMaintainerDownloads(username) {
 
 getMaintainerDownloads('artginzburg').then((data) => {
   let badge = require('./badge.json');
-  badge.message = data.total;
+  badge.message = String(data.total);
   require('fs').writeFileSync('badge.json', JSON.stringify(badge, null, 2));
 });
