@@ -44,6 +44,7 @@ module.exports.endpoint = function (request, response) {
         message: String(data.total),
         color: 'red',
         namedLogo: 'npm',
+        style: 'social',
         cacheSeconds: 8 * 60 * 60,
       }),
     );
