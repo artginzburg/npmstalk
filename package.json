@@ -1,5 +1,5 @@
 {
-  "name": "npmstalk",
+  "name": "@artginzburg/npmstalk",
   "version": "1.1.0",
   "description": "Custom NPM total downloads badge for everyone",
   "license": "ISC",
