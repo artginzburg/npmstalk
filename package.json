@@ -1,7 +1,7 @@
 {
-  "name": "@artginzburg/npmstalk",
-  "version": "1.0.3",
-  "description": "",
+  "name": "npmstalk",
+  "version": "1.1.0",
+  "description": "Custom NPM total downloads badge for everyone",
   "license": "ISC",
   "repository": "artginzburg/npmstalk",
   "funding": "https://www.buymeacoffee.com/artginzburg",
@@ -11,6 +11,7 @@
     "start": "node index"
   },
   "dependencies": {
+    "express": "^4.17.1",
     "npm-api": "^1.0.1"
   }
 }

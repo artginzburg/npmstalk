@@ -35,18 +35,23 @@ async function getMaintainerDownloads(username) {
   };
 }
 
-module.exports.endpoint = function (request, response) {
-  getMaintainerDownloads('artginzburg').then((data) => {
-    response.end(
-      JSON.stringify({
-        schemaVersion: 1,
-        label: 'downloads',
-        message: String(data.total),
-        color: 'red',
-        namedLogo: 'npm',
-        style: 'social',
-        cacheSeconds: 8 * 60 * 60,
-      }),
-    );
-  });
-};
+const express = require('express');
+const app = express();
+
+app.get('/:user', async (req, res) => {
+  const downloads = await getMaintainerDownloads(req.params.user);
+
+  res.end(
+    JSON.stringify({
+      schemaVersion: 1,
+      label: 'downloads',
+      message: String(downloads.total),
+      color: 'red',
+      namedLogo: 'npm',
+      style: 'social',
+      cacheSeconds: 8 * 60 * 60,
+    }),
+  );
+});
+
+module.exports.endpoint = app;
