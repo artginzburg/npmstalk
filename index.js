@@ -49,7 +49,7 @@ app.get('/:user', async (req, res) => {
       color: 'red',
       namedLogo: 'npm',
       style: 'social',
-      cacheSeconds: 8 * 60 * 60,
+      cacheSeconds: 12 * 60 * 60,
     }),
   );
 });
