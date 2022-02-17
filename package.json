@@ -1,12 +1,13 @@
 {
   "name": "@artginzburg/npmstalk",
-  "version": "1.1.1",
+  "version": "1.2.0",
   "description": "Custom NPM total downloads badge for everyone",
   "license": "ISC",
   "repository": "artginzburg/npmstalk",
   "funding": "https://www.buymeacoffee.com/artginzburg",
   "author": "Art Ginzburg <ginzburg.arthur@gmail.com>",
   "main": "index.js",
+  "bin": "bin.js",
   "scripts": {
     "start": "node index"
   },
