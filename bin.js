@@ -5,6 +5,11 @@ async function displayMaintainerDownloads(username) {
   console.log(await getMaintainerDownloads(username));
 }
 
+if (require.main !== module) {
+  // TODO? implement some logic here
+  return;
+}
+
 const lastArgument = process.argv[process.argv.length - 1];
 
 if (lastArgument.includes('/')) {
