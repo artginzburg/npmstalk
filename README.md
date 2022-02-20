@@ -1,17 +1,32 @@
-# Custom NPM total downloads badge for everyone!
+# Usage
 
-Use the following URL and change `:user` at the end to the username of an NPM maintainer
+## As a terminal utility
 
+```ps1
+npx @artginzburg/npmstalk username
 ```
-https://img.shields.io/endpoint?url=https://artginzburg.runkit.io/npmstalk/branches/master/:user
+
+Output example:
+`{ total: 1247, packages: { somename: 515, anotherpackage: 732 } }`
+
+## As a package
+
+`npm i @artginzburg/npmstalk`
+
+```js
+import getMaintainerDownloads from '@artginzburg/npmstalk`
+
+async function doSomething() {
+  // some code
+  const usernameDownloads = await getMaintainerDownloads('username')
+
+  console.log(`Hey, username has ${usernameDownloads.total} downloads already!`)
+  // ...
+}
+// ...
+doSomething() // Hey, username has 615 downloads already!
 ```
 
-## Example
+# Prerequisites
 
-Using Markdown syntax:
-`![](https://img.shields.io/endpoint?url=https://artginzburg.runkit.io/npmstalk/branches/master/artginzburg)`
-
-Outputs this:
-<sub>![](https://img.shields.io/endpoint?url=https://artginzburg.runkit.io/npmstalk/branches/master/artginzburg)</sub>
-
-> You can still style the badge however you want as documented at https://shields.io/#styles
+- Node.JS
