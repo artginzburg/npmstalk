@@ -1,6 +1,6 @@
 {
   "name": "@artginzburg/npmstalk",
-  "version": "1.2.0",
+  "version": "1.3.0",
   "description": "NPM total downloads by maintainer username",
   "license": "ISC",
   "repository": "artginzburg/npmstalk",
