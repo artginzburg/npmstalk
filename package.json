@@ -7,6 +7,7 @@
   "funding": "https://www.buymeacoffee.com/artginzburg",
   "author": "Art Ginzburg <ginzburg.arthur@gmail.com>",
   "bin": "./bin.js",
+  "main": "index.js",
   "files": [
     "src/*",
     "bin.js"
