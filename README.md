@@ -30,3 +30,17 @@ doSomething() // Hey, username has 615 downloads already!
 # Prerequisites
 
 - Node.JS
+
+## Development
+
+For manual testing:
+
+```ps1
+npm start username
+```
+
+For automated testing (not so automated, currently), and using process.env.USER as the username:
+
+```ps1
+npm test
+```

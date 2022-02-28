@@ -6,10 +6,14 @@
   "repository": "artginzburg/npmstalk",
   "funding": "https://www.buymeacoffee.com/artginzburg",
   "author": "Art Ginzburg <ginzburg.arthur@gmail.com>",
-  "main": "index.js",
-  "bin": "bin.js",
+  "bin": "./bin.js",
+  "files": [
+    "src/*",
+    "bin.js"
+  ],
   "scripts": {
-    "start": "node index"
+    "start": "node bin",
+    "test": "node test"
   },
   "dependencies": {
     "npm-api": "^1.0.1"
