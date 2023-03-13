@@ -40,7 +40,7 @@ async function getMaintainerDownloads(username) {
 
   return {
     total: totalMaintainerDownloads,
-    packages: reposWithDownloads,
+    packages: orderRecordStringNumber(reposWithDownloads), // TODO only order downloads if the package is used as a CLI
   };
 }
 
