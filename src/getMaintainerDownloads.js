@@ -4,9 +4,6 @@ const { orderRecordStringNumber } = require('./orderRecordStringNumber');
 
 const npm = new NpmApi();
 
-const sumArray = (/** @type {number} */ accumulator, /** @type {number} */ currentValue) =>
-  accumulator + currentValue;
-
 /**
  * @param {string} username
  */
@@ -25,16 +22,12 @@ async function getMaintainerDownloads(username, sortPackages = false) {
     repoNames.map(async (repoName) => {
       const repo = npm.repo(repoName);
 
-      /** @type { { downloads: number }[] } */
-      const downloads = await repo.downloads();
+      /** @type { number } */
+      const downloads = await repo.total();
 
-      const onlyDownloads = downloads.map((el) => el.downloads);
+      totalMaintainerDownloads += downloads;
 
-      const sumOfDownloads = onlyDownloads.reduce(sumArray, 0);
-
-      totalMaintainerDownloads += sumOfDownloads;
-
-      reposWithDownloads[repoName] = sumOfDownloads;
+      reposWithDownloads[repoName] = downloads;
     }),
   );
 
