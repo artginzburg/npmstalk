@@ -1,5 +1,6 @@
 /**
  * This gets downloads almost instantly, but loses some of the counts, probably because it only checks one registry.
+ * P.S. I just checked and it looks like this endpoint only allows ranges up to 1.5 years, so that maybe why some counts get lost.
  *
  * @param {string} packageName
  * @returns {Promise<DownloadsFast>}
