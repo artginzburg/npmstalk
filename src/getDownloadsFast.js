@@ -5,10 +5,9 @@
  * @param {string} packageName
  * @returns {Promise<DownloadsFast>}
  */
-async function getDownloadsFast(packageName) {
+async function getDownloadsFast(packageName, end = todayAsNpmDate()) {
   const { got } = await import('got');
   const start = '2005-01-01';
-  const end = todayAsNpmDate();
   return got.get(`https://api.npmjs.org/downloads/point/${start}:${end}/${packageName}`).json();
 }
 

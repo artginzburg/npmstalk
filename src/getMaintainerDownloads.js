@@ -40,14 +40,34 @@ async function getDownloadsFastWithFallback(
   repoName,
 ) {
   try {
-    const downloadsObject = await getDownloadsFast(repoName);
-    return downloadsObject.downloads;
+    return getDownloadsFastRecursive(repoName);
   } catch (error) {
     const repo = npm.repo(repoName);
     /** @type { number } */
     const downloads = await repo.total();
     return downloads;
   }
+}
+
+/**
+ * @returns {Promise<number>}
+ *
+ * @param {string} repoName
+ * @param {string?} end
+ * @param {number?} cumulativeDownloadCount
+ */
+async function getDownloadsFastRecursive(
+  repoName,
+  end = undefined,
+  cumulativeDownloadCount = 0,
+) {
+  const downloadsObject = await getDownloadsFast(repoName, end);
+  const olderDownloadsObject = await getDownloadsFast(repoName, downloadsObject.start);
+  const newDownloadCount = cumulativeDownloadCount + downloadsObject.downloads + olderDownloadsObject.downloads;
+  if (olderDownloadsObject.downloads === 0) {
+    return newDownloadCount;
+  }
+  return getDownloadsFastRecursive(repoName, olderDownloadsObject.start, newDownloadCount);
 }
 
 module.exports = getMaintainerDownloads;
