@@ -17,6 +17,7 @@
     "test": "node test"
   },
   "dependencies": {
+    "got": "^12.6.0",
     "npm-api": "^1.0.1"
   }
 }
