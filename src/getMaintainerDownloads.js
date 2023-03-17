@@ -1,6 +1,6 @@
 const NpmApi = require('npm-api');
 
-const { getDownloadsFast } = require('./getDownloadsFast');
+const { getDownloadsFastRecursive } = require('./getDownloadsFast');
 const { orderRecordStringNumber } = require('./orderRecordStringNumber');
 
 const npm = new NpmApi();
@@ -47,27 +47,6 @@ async function getDownloadsFastWithFallback(
     const downloads = await repo.total();
     return downloads;
   }
-}
-
-/**
- * @returns {Promise<number>}
- *
- * @param {string} repoName
- * @param {string?} end
- * @param {number?} cumulativeDownloadCount
- */
-async function getDownloadsFastRecursive(
-  repoName,
-  end = undefined,
-  cumulativeDownloadCount = 0,
-) {
-  const downloadsObject = await getDownloadsFast(repoName, end);
-  const olderDownloadsObject = await getDownloadsFast(repoName, downloadsObject.start);
-  const newDownloadCount = cumulativeDownloadCount + downloadsObject.downloads + olderDownloadsObject.downloads;
-  if (olderDownloadsObject.downloads === 0) {
-    return newDownloadCount;
-  }
-  return getDownloadsFastRecursive(repoName, olderDownloadsObject.start, newDownloadCount);
 }
 
 module.exports = getMaintainerDownloads;
