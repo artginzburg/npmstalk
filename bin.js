@@ -2,11 +2,12 @@
 const getMaintainerDownloads = require('./src/getMaintainerDownloads');
 
 async function displayMaintainerDownloads(username) {
-  console.log(await getMaintainerDownloads(username));
+  console.log(await getMaintainerDownloads(username, true));
 }
 
 if (require.main !== module) {
   // TODO? implement some logic here
+  // @ts-ignore
   return;
 }
 

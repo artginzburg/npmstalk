@@ -10,7 +10,7 @@ const sumArray = (/** @type {number} */ accumulator, /** @type {number} */ curre
 /**
  * @param {string} username
  */
-async function getMaintainerDownloads(username) {
+async function getMaintainerDownloads(username, sortPackages = false) {
   const maintainer = npm.maintainer(username);
 
   /** @type {string[]} */
@@ -40,7 +40,7 @@ async function getMaintainerDownloads(username) {
 
   return {
     total: totalMaintainerDownloads,
-    packages: orderRecordStringNumber(reposWithDownloads), // TODO only order downloads if the package is used as a CLI
+    packages: sortPackages ? orderRecordStringNumber(reposWithDownloads) : reposWithDownloads,
   };
 }
 
