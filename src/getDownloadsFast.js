@@ -30,9 +30,7 @@ async function getGot() {
 }
 
 /**
- * This gets downloads almost instantly, but loses some of the counts, probably because it only checks one registry.
- *
- * This endpoint only allowed ranges up to 1.5 years. {@link getDownloadsFastRecursive} works around that.
+ * This gets downloads almost instantly. But it only allowed ranges up to 1.5 years, and {@link getDownloadsFastRecursive} works around that.
  *
  * @param {string} packageName
  * @returns {Promise<DownloadsFast>}
