@@ -19,5 +19,8 @@
   "dependencies": {
     "got": "^12.6.0",
     "npm-api": "^1.0.1"
+  },
+  "overrides": {
+    "axios": "0.28.0"
   }
 }
