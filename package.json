@@ -18,7 +18,7 @@
     "start": "node bin",
     "test": "node test",
     "build": "tsc",
-    "prepublishOnly": "rm -r ./dist && npm run build"
+    "prepublishOnly": "rm -rf ./dist && npm run build"
   },
   "dependencies": {
     "got": "^12.6.0",
