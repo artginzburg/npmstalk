@@ -19,18 +19,27 @@ async function getDownloadsFastRecursive(
   return getDownloadsFastRecursive(repoName, olderDownloadsObject.start, newDownloadCount);
 }
 
+/** @type {import('got').Got | undefined} */
+let got = undefined;
+
+getGot();
+async function getGot() {
+  if (got) return;
+
+  const { got: importedGot } = await import('got');
+  got = importedGot;
+}
+
 /**
  * This gets downloads almost instantly, but loses some of the counts, probably because it only checks one registry.
  *
- * P.S. I just checked and it looks like this endpoint only allows ranges up to 1.5 years, so that maybe why some counts get lost.
- *
- * P.P.S. It's now fixed by {@link getDownloadsFastRecursive}
+ * This endpoint only allowed ranges up to 1.5 years. {@link getDownloadsFastRecursive} works around that.
  *
  * @param {string} packageName
  * @returns {Promise<DownloadsFast>}
  */
 async function getDownloadsFast(packageName, end = todayAsNpmDate()) {
-  const { got } = await import('got');
+  await getGot();
   const start = '2005-01-01';
   return got.get(`https://api.npmjs.org/downloads/point/${start}:${end}/${packageName}`).json();
 }
