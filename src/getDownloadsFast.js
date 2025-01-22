@@ -11,12 +11,11 @@ async function getDownloadsFastRecursive(
   cumulativeDownloadCount = 0,
 ) {
   const downloadsObject = await getDownloadsFast(repoName, end);
-  const olderDownloadsObject = await getDownloadsFast(repoName, downloadsObject.start);
-  const newDownloadCount = cumulativeDownloadCount + downloadsObject.downloads + olderDownloadsObject.downloads;
-  if (olderDownloadsObject.downloads === 0) {
+  const newDownloadCount = cumulativeDownloadCount + downloadsObject.downloads;
+  if (downloadsObject.downloads === 0) {
     return newDownloadCount;
   }
-  return getDownloadsFastRecursive(repoName, olderDownloadsObject.start, newDownloadCount);
+  return getDownloadsFastRecursive(repoName, downloadsObject.start, newDownloadCount);
 }
 
 /** @type {import('got').Got | undefined} */
