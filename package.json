@@ -1,6 +1,6 @@
 {
   "name": "@artginzburg/npmstalk",
-  "version": "1.4.0",
+  "version": "1.4.1",
   "description": "NPM total downloads by maintainer username",
   "license": "ISC",
   "repository": "artginzburg/npmstalk",
@@ -8,13 +8,17 @@
   "author": "Art Ginzburg <ginzburg.arthur@gmail.com>",
   "bin": "./bin.js",
   "main": "index.js",
+  "types": "./dist/index.d.ts",
   "files": [
     "src/*",
-    "bin.js"
+    "bin.js",
+    "dist/**/*.d.ts"
   ],
   "scripts": {
     "start": "node bin",
-    "test": "node test"
+    "test": "node test",
+    "build": "tsc",
+    "prepublishOnly": "rm -r ./dist && npm run build"
   },
   "dependencies": {
     "got": "^12.6.0",
@@ -22,5 +26,9 @@
   },
   "overrides": {
     "axios": "0.28.0"
+  },
+  "devDependencies": {
+    "@types/node": "^22.10.7",
+    "typescript": "^5.7.3"
   }
 }
