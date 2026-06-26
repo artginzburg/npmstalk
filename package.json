@@ -3,10 +3,15 @@
   "version": "1.4.2",
   "description": "NPM total downloads by maintainer username",
   "license": "ISC",
-  "repository": "artginzburg/npmstalk",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/artginzburg/npmstalk.git"
+  },
   "funding": "https://www.buymeacoffee.com/artginzburg",
   "author": "Art Ginzburg <ginzburg.arthur@gmail.com>",
-  "bin": "./bin.js",
+  "bin": {
+    "npmstalk": "bin.js"
+  },
   "main": "index.js",
   "types": "./dist/index.d.ts",
   "files": [
