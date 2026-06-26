@@ -21,11 +21,7 @@
     "prepublishOnly": "rm -rf ./dist && npm run build"
   },
   "dependencies": {
-    "got": "^12.6.0",
-    "npm-api": "^1.0.1"
-  },
-  "overrides": {
-    "axios": "0.28.0"
+    "got": "^12.6.0"
   },
   "devDependencies": {
     "@types/node": "^22.10.7",
