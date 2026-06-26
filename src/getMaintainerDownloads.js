@@ -4,13 +4,14 @@ const { mapWithConcurrency } = require('./mapWithConcurrency');
 const { getGot } = require('./httpClient');
 
 /**
- * api.npmjs.org (behind Cloudflare) rate-limits by IP: a small concurrent-connection
- * cap plus a token bucket. Measured on a fresh budget, hard `429`s begin at 4 in
- * flight, so 2 keeps a slot of margin under the cap; the remaining token-bucket dips
- * are absorbed by the per-request retry in {@link getDownloadsFast}. Nothing is
- * dropped — packages are paced through the pool, not skipped.
+ * api.npmjs.org (behind Cloudflare) rate-limits by IP with a token bucket. On shared
+ * datacenter IPs (e.g. CI runners) that bucket is often already near-empty, so any
+ * burst trips `429`. Querying serially spreads the (few dozen) requests out enough
+ * for the bucket to refill between them, which is far more reliable there than a
+ * small pool — and the per-request retry in {@link getDownloadsFast} still covers the
+ * occasional dip. Callers that own a fresh IP can raise this for speed.
  */
-const DEFAULT_CONCURRENCY = 2;
+const DEFAULT_CONCURRENCY = 1;
 
 /**
  * @param {string} username
