@@ -38,7 +38,19 @@ async function getGot() {
 async function getDownloadsFast(packageName, end = todayAsNpmDate()) {
   await getGot();
   const start = '2005-01-01';
-  return got.get(`https://api.npmjs.org/downloads/point/${start}:${end}/${packageName}`).json();
+  return got
+    .get(`https://api.npmjs.org/downloads/point/${start}:${end}/${packageName}`, {
+      // api.npmjs.org (Cloudflare) rate-limits by a per-IP token bucket. When the
+      // window is momentarily exhausted it answers 429; backing off and retrying
+      // lets the bucket refill instead of dropping the package. got honors a
+      // Retry-After header automatically when one is present.
+      retry: {
+        limit: 5,
+        methods: ['GET'],
+        statusCodes: [408, 429, 500, 502, 503, 504],
+      },
+    })
+    .json();
 }
 
 function todayAsNpmDate() {

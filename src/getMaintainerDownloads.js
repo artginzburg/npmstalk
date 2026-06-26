@@ -2,13 +2,29 @@ const NpmApi = require('npm-api');
 
 const { getDownloadsFastRecursive } = require('./getDownloadsFast');
 const { orderRecordStringNumber } = require('./orderRecordStringNumber');
+const { mapWithConcurrency } = require('./mapWithConcurrency');
 
 const npm = new NpmApi();
 
 /**
- * @param {string} username
+ * api.npmjs.org (behind Cloudflare) rate-limits by IP: a small concurrent-connection
+ * cap plus a token bucket. Measured on a fresh budget, hard `429`s begin at 4 in
+ * flight, so 2 keeps a slot of margin under the cap; the remaining token-bucket dips
+ * are absorbed by the per-request retry in {@link getDownloadsFast}. Nothing is
+ * dropped — packages are paced through the pool, not skipped.
  */
-async function getMaintainerDownloads(username, sortPackages = false) {
+const DEFAULT_CONCURRENCY = 2;
+
+/**
+ * @param {string} username
+ * @param {boolean} sortPackages
+ * @param {number} concurrency Maximum number of packages queried in parallel.
+ */
+async function getMaintainerDownloads(
+  username,
+  sortPackages = false,
+  concurrency = DEFAULT_CONCURRENCY,
+) {
   const maintainer = npm.maintainer(username);
 
   /** @type {string[]} */
@@ -19,15 +35,13 @@ async function getMaintainerDownloads(username, sortPackages = false) {
   /** @type {Record<string, number>} */
   const reposWithDownloads = {};
 
-  await Promise.all(
-    repoNames.map(async (repoName) => {
-      const downloads = await getDownloadsFastWithFallback(repoName);
+  await mapWithConcurrency(repoNames, concurrency, async (repoName) => {
+    const downloads = await getDownloadsFastWithFallback(repoName);
 
-      totalMaintainerDownloads += downloads;
+    totalMaintainerDownloads += downloads;
 
-      reposWithDownloads[repoName] = downloads;
-    }),
-  );
+    reposWithDownloads[repoName] = downloads;
+  });
 
   return {
     total: totalMaintainerDownloads,
@@ -40,7 +54,7 @@ async function getDownloadsFastWithFallback(
   repoName,
 ) {
   try {
-    return getDownloadsFastRecursive(repoName);
+    return await getDownloadsFastRecursive(repoName);
   } catch (error) {
     const repo = npm.repo(repoName);
     /** @type { number } */
